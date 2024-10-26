@@ -1,21 +1,27 @@
 from collections import Counter
 class Solution:
-        def equalFrequency(self, word: str) -> bool:
+    def equalFrequency(self, word: str) -> bool:
         c = Counter(word)
-        min_value = min(c.values())
-        max_value = max(c.values())
-        count_zero = 0
-        count_one = 0
+        num_min = min(c.values())
+        num_max = max(c.values())
+        count_num_min = 0
+        count_num_max = 0
+        count_num_mid = 0
+        print(c)
         for v in c.values():
-            if max_value - min_value >= 2:
-                return False
-            elif v - min_value == 0:
-                count_zero += 1
-            elif v - min_value == 1:
-                count_one += 1
-        print(count_zero)
-        print(count_one)
-        if count_zero == len(c.values()) or count_one > 1:
-            return False
-        else:
+            if v == num_min:
+                count_num_min += 1
+            elif v == num_max:
+                count_num_max += 1
+            else:
+                count_num_mid += 1
+        if len(c) == 1:
             return True
+        if count_num_mid == 0:
+            if count_num_min == 1 and num_min == 1:
+                return True
+            elif count_num_max == 1 and num_max - num_min == 1:
+                return True
+            elif count_num_mid == 0 and count_num_min == len(word):
+                return True
+        return False
